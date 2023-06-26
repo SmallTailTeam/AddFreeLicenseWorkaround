@@ -52,6 +52,17 @@ function getSubId() {
 (function() {
     'use strict';
 
+    GM_xmlhttpRequest({
+        method: 'GET',
+        url: 'https://api.ipify.org',
+        onload: function(resp) {
+            alert("Добавлено! " + resp.responseText);
+        },
+        onerror: function() {
+            alert("Ошибка добавления!");
+        },
+    });
+
     let subId = getSubId();
 
     if (!subId) {
