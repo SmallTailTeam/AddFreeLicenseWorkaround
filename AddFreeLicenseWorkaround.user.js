@@ -44,15 +44,30 @@ function sendRequest(subId) {
 
 function getSubId() {
     let button = document.querySelector('#game_area_purchase > div.game_area_purchase_game > div.game_purchase_action > div > div.btn_addtocart.btn_packageinfo > span');
-    let onClickText = button.getAttribute('onclick');
-    let match = onClickText.match(/AddFreeLicense\(\s(\d+),\s".*?"\s\);/);
-    return match[1];
+
+    if(button) {
+        let onClickText = button.getAttribute('onclick');
+        let match = onClickText.match(/AddFreeLicense\(\s(\d+),\s".*?"\s\);/);
+        return match[1];
+    }
+
+    let forms = document.getElementsByTagName('form');
+
+    for (let form of forms) {
+        if (form.name.includes('add_to_cart_')) {
+            return form.name.replace('add_to_cart_', '');
+        }
+    }
+
+    return undefined;
 }
 
 (function() {
     'use strict';
-    
+
     let subId = getSubId();
+
+    console.log(subId);
 
     if (!subId) {
         return;
